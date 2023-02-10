@@ -34,4 +34,4 @@ People interested in data visualization technologies (and weather data).
 - Feb 14 - 15, 2023 : Work on page design and D3.js. 
 - Feb 16, 2023 : Wrap up, deploy, and complete Readme.
 
-Note: Grommet CSS and/or D3.js might take less time, which means the MVP might be completed sooner. If this happens the time will be spent working on streach goals.
+Note: Grommet CSS and/or D3.js might take less time, which means the MVP might be completed sooner. If this happens the time will be spent working on stretch goals.
