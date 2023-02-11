@@ -15,7 +15,7 @@ People interested in data visualization technologies (and weather data).
 <a href="https://open-meteo.com/">Weather data by Open-Meteo.com</a>
 
 ## Wireframe
-<img src="project4wireframe.png" alt="project wireframe">
+<img src="public/project4wireframe.png" alt="project wireframe">
 
 ## MVP
 - Allow user to search and retrieve data from API
