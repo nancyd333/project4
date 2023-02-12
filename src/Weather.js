@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
+// import {Link} from 'react-router-dom'
 import axios from 'axios'
-import { Grommet } from 'grommet'
+import { Grommet, Button, Data, Toolbar, DataSearch, DataTable, TextInput, List, Form } from 'grommet'
 
 export default class Weather extends Component{
 
@@ -46,12 +47,11 @@ export default class Weather extends Component{
             const response = await axios.get(url,options);
             
             const cityInfo = response.data.results
+            console.log(cityInfo)
            
             this.setState({
                 cityInfo: cityInfo,
                 city: e.target.value
-
-               
             })
             
         } catch (err){
@@ -74,16 +74,16 @@ export default class Weather extends Component{
                     Accept: 'application/json'
                 }
             }
-            console.log('getweatherdata', e.target.value)
+            // console.log('getweatherdata e.target.value', e.target.value)
             const selectedCity = this.state.cityInfo.find(x => x.id == e.target.value)
-
+            // console.log("this city info id",selectedCity.id)
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${selectedCity.latitude}&longitude=${selectedCity.longitude}&hourly=temperature_2m&current_weather=true&timezone=${selectedCity.timezone}&temperature_unit=fahrenheit`
 
             const response = await axios.get(url,options);
             
             const weatherData = response.data.current_weather
   
-            console.log('weatherdata', weatherData)
+            // console.log('weatherdata', weatherData)
 
             const urlHistorical = `https://archive-api.open-meteo.com/v1/archive?latitude=${selectedCity.latitude}&longitude=${selectedCity.longitude}&start_date=${this.fullTenYearsAgoDate}&end_date=${this.fullOneYearAgoDate}&daily=temperature_2m_mean&timezone=${selectedCity.timezone}&temperature_unit=fahrenheit`
         
@@ -94,8 +94,8 @@ export default class Weather extends Component{
             
             let result = []
             historicalWeatherDataDates.forEach((key, i)=> result[key] = historicalWeatherDataTemp[i])
-            console.log(result)
-            console.log(result[this.fullOneYearAgoDate])
+            console.log("result", result)
+            // console.log(result[this.fullOneYearAgoDate])
 
            
             this.setState({
@@ -113,26 +113,34 @@ export default class Weather extends Component{
         const cityInfo = this.state.cityInfo.map((info)=>
             // console.log('render citydata', info)
             <div key={`id-${info.id}`}>
-                <form>
-                    <button value={info.id} onClick={this.getWeatherData} type="submit">{info.name}, {info.admin1}, {info.country}</button>
-
-                </form>
-            
+                <Form>
+                    <Button color="#6FFFB0" secondary value={info.id} onClick={(this.getWeatherData)} type="submit">{info.id}: {info.name}, {info.admin1}, {info.country}</Button>
+                </Form>
             </div>
         )
+        // const cityInfo2 = this.state.cityInfo.map((info)=>
+        //      `${info.id}: ${info.name}, ${info.admin1}, ${info.country}`
+        // )
+
+        const isSelectedCityInfoSet = this.selectedCityInfo;
+
+ 
+
 
         return(
         <div>
-            <h1>Weather</h1>
+            <h1>Weather 1 home</h1>
 
             <form>
             <label>
-                <input type="text" name="name" value={this.state.city} onChange={this.handleChange} autoComplete="off"/>
+                <TextInput type="text" name="name" value={this.state.city} onChange={this.handleChange} autoComplete="off"/>
                 </label>
             </form>
-            <button onClick={(this.getCityData)} type="submit">search cities</button>
-            
-            <h2>City List</h2>
+            <Button color="#6FFFB0" primary label="search cities" onClick={(this.getCityData)} type="submit"></Button>
+
+            {/* <div>
+                {isSelectedCityInfoSet ? {cityInfo}: ''}
+            </div> */}
             {cityInfo}
 
             <h2>Selected City Data</h2>
@@ -143,6 +151,14 @@ export default class Weather extends Component{
             <p>Today's current temp: {this.state.selectCityCurrentWeatherData.temperature}</p>
             <p>Year ago today date: {`${this.fullOneYearAgoDate}`}</p>
             <p>Year ago today temp: {this.state.historicalWeatherDateCombo[this.fullOneYearAgoDate] ? `${this.state.historicalWeatherDateCombo[this.fullOneYearAgoDate]}` : ''}</p>
+{/* 
+            <List
+                data={cityInfo2}
+                onClickItem={this.getCityData}
+            />    */}
+        
+
+
       </div>
     )
   }
