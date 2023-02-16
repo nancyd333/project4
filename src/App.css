@@ -1,0 +1,164 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  body{
+    background-color: #000000;
+    color: #6FFFB0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  }
+  h2{
+    letter-spacing: 5px;
+  }
+  
+  input {
+    width: 20%;
+    padding: 5px;
+    border: 5px solid #444444;
+    border-radius: 15px 0px 0px 15px ;
+    color: #6FFFB0; 
+    background-color: #444444; 
+    outline: 0px solid #444444;
+    margin-bottom: 20px;
+  }
+  
+  input:focus{
+    border: 5px solid #444444;
+    background-color: rgba(221, 221, 221, 0.5);
+  }
+  
+  ::placeholder{
+    color: #6FFFB0;
+  }
+  
+  .btn{
+  background-color: #6FFFB0;
+  color: black;
+  border: 2px solid  #6FFFB0;
+  padding: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  }
+  
+  #cityName{
+    color: #17c8e3;
+    font-size: 19px;
+  }
+  
+  .default{
+    margin: 5px;
+    letter-spacing: 0.5px;
+    border-radius: 0px 15px 15px 0px ;
+  }
+  
+  .default:focus{
+    outline: 4px solid #444444;
+  }
+  
+  .default:hover{
+    background-color: #444444;
+    color:  #6FFFB0;
+    transition: 0.5s;
+  }
+  
+  .city{
+    margin: 5px;
+    background-color: black;
+    color:  #6FFFB0;
+    border: 2px solid black;
+  }
+  
+  .city:hover{
+    color:  hotpink;
+    font-size: 16px;
+    transition: 0.5s;
+  }
+  
+  .city:focus{
+    color:  hotpink;
+    font-size: 16px;
+    outline: 0px solid black;
+  }
+  
+  .tick line{
+    stroke: #5D5963
+  }
+  
+  .tick text{
+    /* fill: #6FFFB0; */
+    fill: #17c8e3;
+    font-family: 'Segoe UI';
+    font-size: 15px;
+  
+  }
+  
+  .domain{
+    stroke: black;
+  }
+  
+  
+  #tooltip{
+      position: absolute;
+      width: 65px;
+    color: black;
+    font-weight: bold;
+      height: 30px; /*auto*/
+      padding: 5px;
+    background-color: #fcffba;
+      /* background-color: rgba(255, 255, 255, 0.33); */
+    /* #777777; */
+      /* -webkit-border-radius: 10px;
+      -moz-border-radius: 10px; */
+      border-radius: 15px;
+      /* -webkit-box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+      -moz-box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.4); */
+      pointer-events: none;
+  }
+  #tooltip.hidden{
+      display: none;
+  }
+  #tooltip p{
+      margin: 0px;
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 15px;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

@@ -1,9 +1,7 @@
 import React, {Component, useState} from 'react'
 // import {Link} from 'react-router-dom'
 import axios from 'axios'
-import Chart2 from './Chart2'
 import Chart from './Chart'
-import Chart3 from './Chart3'
 import * as d3 from 'd3'
 
 export default class Data extends Component{
