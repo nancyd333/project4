@@ -3,7 +3,7 @@ import {useEffect,  useRef, useState} from 'react';
 
 function Chart(props) {
     
-const {tempData, citySelected, hasCitySelected } = props;
+const {tempData, citySelected, hasCitySelected, todayMonthString, todayDay, todayYear } = props;
 
 const city = citySelected
 
@@ -89,7 +89,7 @@ const svgRef = useRef();
       .attr("text-anchor", "end")
       .attr("fill", "#6FFFB0")
       .style("font", "20px 'Segoe UI'")
-      .text("time period");
+      .text(`time period for ${todayMonthString} ${todayDay}`);
 
       svg.append("g")
       .call(d3.axisLeft(yScale))
@@ -114,9 +114,9 @@ const svgRef = useRef();
         .on('mouseover', function(event, d){
             d3.select('#tooltip')
                 .transition()
-                .duration(200)
+                .duration(0)
                 .style('opacity', 1)
-                .text(`${d.temp}  ℉\non ${d.actual_date}`)
+                .text(`${d.temp}℉`) 
             
             d3.select('#tooltip')
             d3.select(this).attr('class','highlight')  
@@ -125,12 +125,11 @@ const svgRef = useRef();
                 .attr('width', xScale.bandwidth())
                 .attr('y', function(d){return yScale(d.temp) - 10;})
                 .attr('height', function(d){return h - yScale(d.temp) + 10;})
-                .attr("fill", "#f8faca")
+                .attr("fill", "#333333")
         })
         .on('mouseout', function(event, d){
             d3.select('#tooltip')
                 .style('opacity', 0)
-                // .text(d)
             d3.select(this).attr('class','bar')
             d3.select(this)
                 .transition()
@@ -140,16 +139,12 @@ const svgRef = useRef();
                 .attr('height', function(d) {return h - yScale(d.temp)})
                 .attr("fill", function(d) {return barColors(d.temp)})
         })
-        .on('mousemove', function(event, d){
+        .on('mousemove', function(event){
             d3.select('#tooltip')
             .style('left', event.pageX+10 + 'px')
             .style('top', event.pageY+10 + 'px')
         })
-
-
   })
-
-
 
 return (
 	<div>
@@ -159,6 +154,5 @@ return (
     </div>
 	)
 }
-
 
 export default Chart;

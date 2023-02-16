@@ -102,26 +102,7 @@
   .domain{
     stroke: black;
   }
-  
-  #tooltip{
-      width: auto;
-      color: black;
-      height: auto;
-      padding: 20px;
-      background-color: #fcffba;
-      border-radius: 15px;
-      /* pointer-events: none; */
-  }
-  #tooltip.hidden{
-      display: none;
-  }
-  #tooltip p{
-      margin: 0px;
-      font-family: sans-serif;
-      font-size: 12px;
-      line-height: 15px;
-  }
-  
+    
   @media (prefers-reduced-motion: no-preference) {
     .App-logo {
       animation: App-logo-spin infinite 20s linear;

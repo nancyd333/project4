@@ -12,6 +12,9 @@ export default class Data extends Component{
         selectedCityInfo: [],
         selectCityCurrentWeatherData: {},
         historicalWeatherDateCombo: [],
+        todayMonthString: '',
+        todayDay: '',
+        todayYear: '',
         currentTemp: 0,
         oneYearAgoTemp: 0,
         fiveYearsAgoTemp: 0,
@@ -21,12 +24,9 @@ export default class Data extends Component{
     }
 
     today = new Date()
-    currentYear = this.today.getFullYear()
-    oneYearAgo = this.currentYear - 1
-    fiveYearsAgo = this.currentYear - 5
-    tenYearsAgo = this.currentYear - 10
-    thirtyYearsAgo = this.currentYear - 30
-    month = this.today.getMonth() + 1
+    
+
+    //formats js date to month with leading zero 1 becomes 01; 12 remains 12
     formattedMonth = () =>{
         if(this.month.length != 2){
             return `0${this.month}`
@@ -34,14 +34,53 @@ export default class Data extends Component{
             return `${this.month}`
         }
     }
-    day = this.today.getDate()
-    
-    todayDate = this.today.toLocaleDateString()
-    oneYearAgoFormatted = `${this.formattedMonth()}/${this.day}/${this.oneYearAgo}`
-    fiveYearsAgoFormatted =  `${this.formattedMonth()}/${this.day}/${this.fiveYearsAgo}`
-    tenYearsAgoFormatted =  `${this.formattedMonth()}/${this.day}/${this.tenYearsAgo}`
-    thirtyYearsAgoFormatted =  `${this.formattedMonth()}/${this.day}/${this.thirtyYearsAgo}`
 
+    //takes js date month, numberic from 0-11 and returns the text. 0 returns Jan
+    monthNumberToText = (num) => {
+        switch(num){
+            case 0:
+                return 'Jan';
+            case 1:
+                return 'Feb';
+            case 2:
+                return 'Mar';
+            case 3:
+                return 'Apr';
+            case 4:
+                return 'May';
+            case 5:
+                return 'Jun';
+            case 6:
+                return 'July';
+            case 7:
+                return 'Aug';
+            case 8:
+                return 'Sep';
+            case 9:
+                return 'Oct';
+            case 10:
+                return 'Nov';
+            case 11:
+                return 'Dec';
+        }
+
+    }
+
+    //these are saved in state and passed as props to Chart
+    todayMonthString =  this.monthNumberToText(this.today.getMonth())
+    todayDay = this.today.getDate()
+    todayYear = this.today.getFullYear()
+
+    //these are used as parameters in variables which are then passed to the API
+    day = this.today.getDate()
+    month = this.today.getMonth() + 1 //this converts the js month number system 0-11 to the number systems users use 1-12
+    currentYear = this.today.getFullYear()
+    oneYearAgo = this.currentYear - 1
+    fiveYearsAgo = this.currentYear - 5
+    tenYearsAgo = this.currentYear - 10
+    thirtyYearsAgo = this.currentYear - 30
+
+    //these variables are used as parameters in the API and the function getTempDate() to get the temperature for a particular date which is passed to react state
     fullCurrentDate = `${this.currentYear}-${this.formattedMonth()}-${this.day}`
     fullOneYearAgoDate = `${this.oneYearAgo}-${this.formattedMonth()}-${this.day}`
     fullFiveYearsAgoDate = `${this.fiveYearsAgo}-${this.formattedMonth()}-${this.day}`
@@ -65,19 +104,20 @@ export default class Data extends Component{
             
             const cityInfo = response.data.results
             console.log(cityInfo)
+    
            
             this.setState({
                 cityInfo: cityInfo,
                 city: e.target.value,
-                currentTemp: 0,
+                currentTemp: 0,                
             })    
+
+            console.log("today date setState test", this.todayMonthString, this.todayDay, this.todayYear)
 
         } catch (err){
             console.log(err)
         }
     }
-
-
 
     handleChange = e => {       
         console.log("target value", e.target.value)
@@ -139,6 +179,9 @@ export default class Data extends Component{
                 fiveYearsAgoTemp: getTempDate(this.fullFiveYearsAgoDate),
                 tenYearsAgoTemp: getTempDate(this.fullTenYearsAgoDate),
                 thirtyYearsAgoTemp: getTempDate(this.fullThirtyYearsAgoDate),
+                todayMonthString:  this.todayMonthString,
+                todayDay: this.todayDay,
+                todayYear: this.todayYear,
             }, () => {
                 // console.log("result test in this.setState", result)
             })
@@ -163,11 +206,11 @@ export default class Data extends Component{
         )
 
         const data = [
-            {"date": 'Current', "actual_date": this.todayDate ,"temp": this.state.currentTemp},
-            {"date": '1 yr ago', "actual_date": this.oneYearAgoFormatted ,"temp": this.state.oneYearAgoTemp},
-            {"date": '5 yrs ago', "actual_date": this.fiveYearsAgoFormatted ,"temp": this.state.fiveYearsAgoTemp},
-            {"date": '10 yrs ago', "actual_date": this.tenYearsAgoFormatted ,"temp": this.state.tenYearsAgoTemp},
-            {"date": '30 yrs ago', "actual_date": this.thirtyYearsAgoFormatted ,"temp": this.state.thirtyYearsAgoTemp},
+            {"date": this.currentYear, "temp": this.state.currentTemp},
+            {"date": this.oneYearAgo, "temp": this.state.oneYearAgoTemp},
+            {"date": this.fiveYearsAgo, "temp": this.state.fiveYearsAgoTemp},
+            {"date": this.tenYearsAgo, "temp": this.state.tenYearsAgoTemp},
+            {"date": this.thirtyYearsAgo, "temp": this.state.thirtyYearsAgoTemp},
         ]
         
         console.log("data to pass to props", data)
@@ -187,6 +230,9 @@ export default class Data extends Component{
                 tempData = {this.state.oneYearAgoTemp ? data : []}
                 citySelected = {`${this.state.selectedCityInfo.name} , ${this.state.selectedCityInfo.admin1} , ${this.state.selectedCityInfo.country}`}
                 hasCitySelected = {this.state.selectedCityInfo.name}
+                todayMonthString = {this.todayMonthString}
+                todayDay={this.todayDay}
+                todayYear={this.todayYear}
                 /> : ''}
             </div>
       </div>
