@@ -46,7 +46,7 @@ const svgRef = useRef();
     // create a scale between colors that varies by the frequency
 	const barColors = d3.scaleLinear()
     .domain([0,d3.max(data, d => d.temp)])
-    .range(["rgba(209, 14, 0,0)", "rgba(209, 14, 0,1)"])//"#b51417" ""])
+    .range(["rgba(209, 14, 0,0)", "rgba(209, 14, 600,1)"])//"#b51417" ""])
 
     //setting the axes
     const xAxis = d3.axisBottom(xScale)
@@ -79,25 +79,6 @@ const svgRef = useRef();
 	    .attr("fill", function(d) {return barColors(d.temp)}) //how to set background color for svg elements is fill
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 10)
-      // .on("mouseover", function(d) {
-      //   d3.select(this).attr("r", 10).style("fill", "red");
-      // })    
-    //   .on("mouseover", onMouseOver) // Add listener for event
-    //   .on("mouseout", onMouseOut)
-  
-   
-
-    // svg.selectAll('text')
-    //   .data(data)
-    //   .enter()
-    //   .append('text')
-    //   .text((d)=>d)
-    //   .attr('x', d => xScale(d.date))
-    //   .attr('y', d => yScale(d.temp))
-    //   .attr('font-size', 25)
-    //   .attr('fill', 'red')
-
-
 
     svg.append("g")  
       .attr("transform", "translate(0," + h + ")")
@@ -131,72 +112,39 @@ const svgRef = useRef();
         .join('rect')
         .attr('r', 3)
         .on('mouseover', function(event, d){
-            d3.select('#tooltip').transition().duration(200).style('opacity', 1).text(`${d.temp}  ℉\non ${d.actual_date}`)
+            d3.select('#tooltip')
+                .transition()
+                .duration(200)
+                .style('opacity', 1)
+                .text(`${d.temp}  ℉\non ${d.actual_date}`)
+            
+            d3.select('#tooltip')
+            d3.select(this).attr('class','highlight')  
+                .transition()
+                .duration(300)
+                .attr('width', xScale.bandwidth())
+                .attr('y', function(d){return yScale(d.temp) - 10;})
+                .attr('height', function(d){return h - yScale(d.temp) + 10;})
+                .attr("fill", "#f8faca")
         })
         .on('mouseout', function(event, d){
-            d3.select('#tooltip').style('opacity', 0).text(d)
+            d3.select('#tooltip')
+                .style('opacity', 0)
+                // .text(d)
+            d3.select(this).attr('class','bar')
+            d3.select(this)
+                .transition()
+                .duration(300)
+                .attr('width', xScale.bandwidth())
+                .attr('y', function(d){return yScale(d.temp);})
+                .attr('height', function(d) {return h - yScale(d.temp)})
+                .attr("fill", function(d) {return barColors(d.temp)})
         })
         .on('mousemove', function(event, d){
             d3.select('#tooltip')
             .style('left', event.pageX+10 + 'px')
             .style('top', event.pageY+10 + 'px')
         })
-
-    //   function onMouseOver(d, i) {
-    //     // Get bar's xy values, ,then augment for the tooltip
-    //     // const xPos = parseFloat(d3.select(this).attr('x')) + xScale.bandwidth() /2
-    //     const xPos = parseFloat(d3.select(this).attr('x')) + xScale.bandwidth()
-    //     //* 1.25 ;
-    //     // var yPos = parseFloat(d3.select(this).attr('y')) / 2 + height / 2;
-    //     const yPos = parseFloat(d3.select(this).attr('y')) + "height"
-    //     //+ h * 0.60
-        
-    //     // const xPos = d3.select(this).attr('x', d => xScale(d.date))
-    //     // const yPos = d3.select(this).attr('y', d => yScale(d.temp))
-    //     // const xPos = d3.select(this).attr('x', d => xScale(d.date)) *2
-    //     // const yPos = d3.select(this).attr('y', d => yScale(d.temp)) *2
-    
-    //     // Update Tooltip's position and value
-    //     d3.select('#tooltip')
-    //       // .style('left', "width" + 'px')
-    //       // .style('top', "height" + 'px')
-    //       // .style("left", xPos+'px')
-    //       // .style("top", yPos+'px')
-    //       .style("left", xPos + 'px')
-    //       .style("top", yPos + 'px')
-    //       .select('#value').text(`${i.temp}℉` + ' on ' + `${i.actual_date}`)
-    //       // console.log("xPos ", xPos)
-        
-        
-    //     d3.select('#tooltip').classed('hidden', false);
-    
-    
-    //     d3.select(this).attr('class','highlight')
-    //     d3.select(this)
-    //       .transition() // I want to add animnation here
-    //       .duration(500)
-    //       .attr('width', xScale.bandwidth())
-    //       .attr('y', function(d){return yScale(d.temp) - 10;})
-    //       .attr('height', function(d){return h - yScale(d.temp) + 10;})
-    //       // .attr("fill", "#d40fac")
-    //       .attr("fill", "#f8faca")
-
-    
-    //   }
-    
-    //   // Mouseout event handler
-    //   function onMouseOut(d, i){
-    //     d3.select(this).attr('class','bar')
-    //     d3.select(this)
-    //       .transition()
-    //       .duration(500)
-    //       .attr('width', xScale.bandwidth())
-    //       .attr('y', function(d){return yScale(d.temp);})
-    //       .attr('height', function(d) {return h - yScale(d.temp)})
-    //       .attr("fill", function(d) {return barColors(d.temp)})
-        
-    //     d3.select('#tooltip').classed('hidden', true);
-    //   }
 
 
   })
@@ -206,9 +154,6 @@ const svgRef = useRef();
 return (
 	<div>
         <p id="cityName">{hasCitySelected ? city : ''}</p>
-        {/* <div id="tooltip" className="hidden">
-		      <p><span id="value"></span></p>
-        </div> */}
         <svg ref={svgRef}></svg>
 
     </div>
