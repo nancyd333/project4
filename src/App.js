@@ -1,25 +1,19 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Weather from "./Weather";
-import Weather2 from "./Weather2";
-import Navbar from "./Navbar";
-import { Grommet } from 'grommet';
-import {grommet, dark} from 'grommet/themes';
+import React, {useState, useRef, useEffect} from 'react';
+import * as d3 from 'd3';
+// import Chart from './Chart'
+import Data from './Data'
+import Data2 from './Data2'
+import axios from 'axios'
+import './App.css';
 
 function App() {
+  
 
   return (
-    <Grommet theme={dark} full>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Weather />}/>
-          <Route path="/weather2" element={<Weather2 />}/>
-          {/* <Route path="*" element={<App />} /> */}
-          {/* <Route path="/houses/:houseId/members/:memberId" element={<Member houses={gameOfThrones}/>}/> */}
-        </Routes>
-      </Router>
-      </Grommet>  
-  )
+    <div className="App">
+      <Data />      
+    </div>
+  );
 }
 
 export default App;
