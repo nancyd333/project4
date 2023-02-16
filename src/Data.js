@@ -1,5 +1,4 @@
 import React, {Component, useState} from 'react'
-// import {Link} from 'react-router-dom'
 import axios from 'axios'
 import Chart from './Chart'
 import * as d3 from 'd3'
@@ -150,11 +149,8 @@ export default class Data extends Component{
             const responseHistorical = await axios.get(urlHistorical,options);
                 
             const historicalWeatherDataDates = responseHistorical.data.daily.time
-            // const historicalWeatherDataDates = historicalWeatherDataDates2.map(i => new Date(i))
             const historicalWeatherDataTemp = responseHistorical.data.daily.temperature_2m_mean
             
-            // let result = []
-            // historicalWeatherDataDates.forEach((key, i)=> result[key] = historicalWeatherDataTemp[i])
             // console.log("result", result)
             let result = historicalWeatherDataTemp.map((item, index)=> {
                 return {date: historicalWeatherDataDates[index], temp: item}
@@ -169,6 +165,27 @@ export default class Data extends Component{
             }
             // console.log("one historical data", getTempDate(this.fullOneYearAgoDate))
 
+            function getTempAvg(month, day){
+                const tempsThisMonth = []
+                let sum = 0;
+                for(let i = 0; i < result.length; i++){
+                    if (result[i].date.substr(5,2) == month && result[i].date.substr(8,3) == day){
+                        tempsThisMonth.push(result[i].temp)
+                    }
+                }
+                tempsThisMonth.forEach(function(item){
+                    sum+= item
+                })
+
+                return (
+                    sum/tempsThisMonth.length
+                    )
+            }
+            const avgTempMonthDay = Math.round(getTempAvg(this.formattedMonth(), this.day))
+            // console.log("DATES", this.formattedMonth(), this.day)
+            // console.log("GET AVG", avgTempMonthDay)
+
+
             this.setState({
                 historicalWeatherDateCombo: result, 
                 selectedCityInfo: selectedCity,
@@ -182,6 +199,7 @@ export default class Data extends Component{
                 todayMonthString:  this.todayMonthString,
                 todayDay: this.todayDay,
                 todayYear: this.todayYear,
+                avgTempMonthDay: avgTempMonthDay
             }, () => {
                 // console.log("result test in this.setState", result)
             })
@@ -233,6 +251,7 @@ export default class Data extends Component{
                 todayMonthString = {this.todayMonthString}
                 todayDay={this.todayDay}
                 todayYear={this.todayYear}
+                avgTempMonthDay={this.state.avgTempMonthDay}
                 /> : ''}
             </div>
       </div>

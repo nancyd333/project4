@@ -1,31 +1,24 @@
 import * as d3 from 'd3';
-import {useEffect,  useRef, useState} from 'react';
+import {useEffect,  useRef} from 'react';
 
 function Chart(props) {
     
-const {tempData, citySelected, hasCitySelected, todayMonthString, todayDay, todayYear } = props;
+const {tempData, citySelected, hasCitySelected, todayMonthString, todayDay, todayYear, avgTempMonthDay } = props;
 
 const city = citySelected
 
 const data = tempData
-console.log("chart data check", data)
-// const [data, setData] = useState([])
+// console.log("chart data check", data)
 const svgRef = useRef();
 
-//   setData(this?.props.tempData)
   
-  useEffect(()=>{
-   
-    // const margin = ({top: 20, right: 0, bottom: 100, left: 0})
+  useEffect(()=>{  
     //setting up svg
     const w = 400;
     const h = 300;
-    // const svg = {};
     const svgEl = d3.select(svgRef.current)
-    svgEl.selectAll("*").remove()
-    
+    svgEl.selectAll("*").remove() 
 
-    // const svg = d3.select(svgRef.current)
     const svg = svgEl
       .attr('width', w)
       .attr('height', h)
@@ -46,14 +39,14 @@ const svgRef = useRef();
     // create a scale between colors that varies by the frequency
 	const barColors = d3.scaleLinear()
     .domain([0,d3.max(data, d => d.temp)])
-    .range(["rgba(209, 14, 0,0)", "rgba(209, 14, 600,1)"])//"#b51417" ""])
+    .range(["rgba(209, 14, 0,0)", "rgba(209, 14, 600,1)"])
 
     //setting the axes
     const xAxis = d3.axisBottom(xScale)
       .ticks(data.length)
   
-        // console.log("tick dates", data.map((e)=> e.date))
-        // console.log("tick dates", data.map((e)=> e.temp))
+    // console.log("tick dates", data.map((e)=> e.date))
+    // console.log("tick dates", data.map((e)=> e.temp))
     
     const yAxis = d3.axisLeft(yScale)
       .ticks(data.length);
@@ -73,9 +66,6 @@ const svgRef = useRef();
 	    .attr('y', d => yScale(d.temp)) // uses temp as domain for yScale to know where to posistion along range
 	    .attr('width', xScale.bandwidth()) //in pixels, equal value for every bar (width/#data points)
       .attr('height', d => yScale(0) - yScale(d.temp)) // in pixels, takes range, this is what gets the bars to not be floating everywhere (take max height and subtract from calculated)
-	    // .style("padding", "5px")
-	    // .style("margin", "5px")
-	    // .style("width", d => `${d * 5}px`)
 	    .attr("fill", function(d) {return barColors(d.temp)}) //how to set background color for svg elements is fill
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 10)
@@ -100,12 +90,31 @@ const svgRef = useRef();
       .attr("text-anchor", "end")
       .attr("fill", "#6FFFB0")
       .style("font", "20px 'Segoe UI'")
-      .text("temperature ℉");
+      .text("temperature ℉")
 
       d3.select('body')
         .append('div')
         .attr('id', 'tooltip')
         .attr('style', 'position: absolute; opacity: 0;')
+
+    svg.selectAll(".monthaverage")
+        .data(data)
+        .enter().append("line")
+        .attr("class", "monthaverage")
+        .attr("x1", 0)
+        .attr("x2", w)
+        .attr("y1", yScale(avgTempMonthDay))
+        .attr("y2", yScale(avgTempMonthDay))
+        .style("stroke", "#6FFFB0");
+    
+    svg.append('text')
+        .attr("x", w + 50 )
+        .attr("y", yScale(avgTempMonthDay)+5)
+        .attr("text-anchor", "middle")
+        .attr("class", "myLabel")
+        .text(`avg: ${avgTempMonthDay} ℉`)
+        .style("fill", "#6FFFB0")
+
 
     d3.select('svg').selectAll('rect')
         .data(data)
