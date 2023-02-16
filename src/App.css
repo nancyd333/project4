@@ -103,24 +103,14 @@
     stroke: black;
   }
   
-  
   #tooltip{
-      position: absolute;
-      width: 65px;
-    color: black;
-    font-weight: bold;
-      height: 30px; /*auto*/
-      padding: 5px;
-    background-color: #fcffba;
-      /* background-color: rgba(255, 255, 255, 0.33); */
-    /* #777777; */
-      /* -webkit-border-radius: 10px;
-      -moz-border-radius: 10px; */
+      width: auto;
+      color: black;
+      height: auto;
+      padding: 20px;
+      background-color: #fcffba;
       border-radius: 15px;
-      /* -webkit-box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
-      -moz-box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
-      box-shadow: 4px 4px 10px rgba(0,0,0,0.4); */
-      pointer-events: none;
+      /* pointer-events: none; */
   }
   #tooltip.hidden{
       display: none;
