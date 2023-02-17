@@ -26,9 +26,9 @@ Since the project timeline is short I've decided use Open-Meteo API since it ret
 The application allows a user to search for their city and displays a graph with visualized weather information. 
 
 ## User Stories
-I would like to be able to search for any city in the world and retrieve today's temperature.
-I would like to see today's weather compared to the weather at different points in the past.
-I would like to see how the temperature compares the average for this day over the past 30 years.
+- I would like to be able to search for any city in the world and retrieve today's temperature.
+- I would like to see today's weather compared to the weather at different points in the past.
+- I would like to see how the temperature compares the average for this day over the past 30 years.
 
 ## Wireframe
 <img src="public/project4wireframe.png" alt="project wireframe">
