@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react'
+import React, {Component} from 'react'
 import axios from 'axios'
 import Chart from './Chart'
 
@@ -25,7 +25,7 @@ export default class Data extends Component{
 
     //formats js date to month with leading zero 1 becomes 01; 12 remains 12
     formattedMonth = () =>{
-        if(this.month.length != 2){
+        if(this.month.length !== 2){
             return `0${this.month}`
         } else{
             return `${this.month}`
@@ -59,6 +59,8 @@ export default class Data extends Component{
                 return 'Nov';
             case 11:
                 return 'Dec';
+            default:
+                return 'Error';
         }
 
     }
@@ -132,6 +134,7 @@ export default class Data extends Component{
                 }
             }
             // console.log('getweatherdata e.target.value', e.target.value)
+            // eslint-disable-next-line
             const selectedCity = this.state.cityInfo.find(x => x.id == e.target.value)
             // console.log("this city info id",selectedCity.id)
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${selectedCity.latitude}&longitude=${selectedCity.longitude}&hourly=temperature_2m&current_weather=true&timezone=${selectedCity.timezone}&temperature_unit=fahrenheit`
@@ -156,6 +159,7 @@ export default class Data extends Component{
             console.log("result", result)
             function getTempDate(dt){
                 for(let i = 0; i < result.length; i++){
+                    // eslint-disable-next-line
                     if (result[i].date == dt){
                         return result[i].temp;
                     }
@@ -167,6 +171,7 @@ export default class Data extends Component{
                 const tempsThisMonth = []
                 let sum = 0;
                 for(let i = 0; i < result.length; i++){
+                    // eslint-disable-next-line
                     if (result[i].date.substr(5,2) == month && result[i].date.substr(8,3) == day){
                         tempsThisMonth.push(result[i].temp)
                     }
