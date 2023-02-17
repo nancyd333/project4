@@ -3,7 +3,7 @@ import {useEffect,  useRef} from 'react';
 
 function Chart(props) {
     
-const {tempData, citySelected, hasCitySelected, todayMonthString, todayDay, todayYear, avgTempMonthDay } = props;
+const {tempData, citySelected, hasCitySelected, todayMonthString, todayDay, avgTempMonthDay } = props;
 
 const city = citySelected
 const data = tempData
@@ -57,7 +57,8 @@ const svgRef = useRef();
     svg.append('g')
        .call(yAxis);
     
-    const bars = svg
+    //this creates the bars
+    svg
 	  .selectAll("rect")
 	  .data(data)
 	  .enter().append("rect")
