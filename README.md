@@ -15,7 +15,7 @@ run ```npm i```
 HTML/CSS<br/>
 <a href="https://reactjs.org/">React</a><br/>
 Graph using <a href="https://d3js.org/">D3.js</a><br/>
-Weather data from <a href="https://open-meteo.com/">Open-Meteo.com</a>
+Weather and city API data from <a href="https://open-meteo.com/">Open-Meteo.com</a>
 
 # The Project
 ## Project
