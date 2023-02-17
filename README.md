@@ -48,6 +48,8 @@ I would like to see how the temperature compares the average for this day over t
 - Feb 16, 2023 : Complete styling and interactivity, deploy, and complete Readme.
 
 ## Major Hurdles
-- Originally this project was to include Grommet CSS, React, and D3.js but this proved to not be viable. Therefore the project uses HTML and CSS for styling.
-- D3.js has a learning curve. Watching youTube videos was helpful, as was getting to understand some of the basics using <a href="https://observablehq.com/@d3">Observable</a>
+- Originally this project was to include Grommet CSS, React, and D3.js but this proved to not be viable. Therefore the project uses React and D3.js with basic HTML and CSS for styling.
+- D3.js has a learning curve. 
+    - Watching YouTube videos was helpful, as was understanding some of the basics using <a href="https://observablehq.com/@d3">Observable</a>. After trial and error I realized many of the examples use an older version of D3 which had different syntax. I also realized errors in Observable can be Observable errors and not D3.js errors. 
+    - Since both D3 and React control the DOM there are many different (and sometimes conflicting) suggestions about what should and should not be tried used D3.js and React. A future goal would be exploring the different options and understanding the limitations as well as other technologies that might be better suited for specific tasks.
 
