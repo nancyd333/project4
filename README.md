@@ -1,5 +1,5 @@
 ## About
-**The Weather On This Day** application allows you to search for any city in world and returns the current temperature, as well as the temperature on the same day 1 year ago, 5 years ago, 10 years ago, and 30 years ago. The average temperature for todays day, over the past 30 years, is provided for comparison. Hovering over the bars reveals the temperature value.
+**The Weather Today** application allows you to search for any city in world and returns the current temperature, as well as the temperature on the same day 1 year ago, 5 years ago, 10 years ago, and 30 years ago. The average temperature for todays day, over the past 30 years, is provided for comparison. Hovering over the bars reveals the temperature value.
 
 ## Link to Site
 <a href="https://weather-today-30.netlify.app/">The Weather On This Day</a>
