@@ -1,7 +1,6 @@
 import React, {Component, useState} from 'react'
 import axios from 'axios'
 import Chart from './Chart'
-import * as d3 from 'd3'
 
 export default class Data extends Component{
 
@@ -23,7 +22,6 @@ export default class Data extends Component{
     }
 
     today = new Date()
-    
 
     //formats js date to month with leading zero 1 becomes 01; 12 remains 12
     formattedMonth = () =>{
@@ -231,10 +229,11 @@ export default class Data extends Component{
             {"date": this.thirtyYearsAgo, "temp": this.state.thirtyYearsAgoTemp},
         ]
         
-        console.log("data to pass to props", data)
+        // console.log("data to pass to props", data)
+        
         return(
         <div>
-            <h2>weather over time</h2>
+            <h2>the weather on this day</h2>
 
             <form >
             <label>

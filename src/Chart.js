@@ -6,26 +6,25 @@ function Chart(props) {
 const {tempData, citySelected, hasCitySelected, todayMonthString, todayDay, todayYear, avgTempMonthDay } = props;
 
 const city = citySelected
-
 const data = tempData
 // console.log("chart data check", data)
 const svgRef = useRef();
 
-  
   useEffect(()=>{  
+    
     //setting up svg
     const w = 400;
     const h = 300;
     const svgEl = d3.select(svgRef.current)
+    
     svgEl.selectAll("*").remove() 
 
     const svg = svgEl
-      .attr('width', w)
-      .attr('height', h)
-      .style('background', 'black')
-      .style('margin-top', '50')
-      .style('overflow', 'visible')
-
+        .attr('width', w)
+        .attr('height', h)
+        .style('background', 'black')
+        .style('margin-top', '50')
+        .style('overflow', 'visible')
 
     //setting the scaling
     const xScale = d3.scaleBand() //ordinal scale
@@ -33,13 +32,13 @@ const svgRef = useRef();
         .domain(data.map(d=>d.date)) // actual data  
 
     const yScale = d3.scaleLinear()
-      .domain([0,d3.max(data, function(d){return d.temp})]) //your actual data
-      .range([h,0]); // the coordinates for your grid
+        .domain([0,d3.max(data, function(d){return d.temp})]) //your actual data
+        .range([h,0]); // the coordinates for your grid
 
     // create a scale between colors that varies by the frequency
 	const barColors = d3.scaleLinear()
-    .domain([0,d3.max(data, d => d.temp)])
-    .range(["rgba(209, 14, 0,0)", "rgba(209, 14, 600,1)"])
+        .domain([0,d3.max(data, d => d.temp)])
+        .range(["rgba(209, 14, 0,0)", "rgba(209, 14, 600,1)"])
 
     //setting the axes
     const xAxis = d3.axisBottom(xScale)
@@ -50,14 +49,14 @@ const svgRef = useRef();
     
     const yAxis = d3.axisLeft(yScale)
       .ticks(data.length);
-    svg.append('g')
-      .call(xAxis)
-      .attr('transform', `translate(0, ${h})`)
-    svg.append('g')
-      .call(yAxis);
     
-
-
+    svg.append('g')
+       .call(xAxis)
+       .attr('transform', `translate(0, ${h})`)
+    
+    svg.append('g')
+       .call(yAxis);
+    
     const bars = svg
 	  .selectAll("rect")
 	  .data(data)
@@ -65,7 +64,7 @@ const svgRef = useRef();
 	    .attr('x', d => xScale(d.date)) //uses date as domain for xScale to know where to position along range
 	    .attr('y', d => yScale(d.temp)) // uses temp as domain for yScale to know where to posistion along range
 	    .attr('width', xScale.bandwidth()) //in pixels, equal value for every bar (width/#data points)
-      .attr('height', d => yScale(0) - yScale(d.temp)) // in pixels, takes range, this is what gets the bars to not be floating everywhere (take max height and subtract from calculated)
+        .attr('height', d => yScale(0) - yScale(d.temp)) // in pixels, takes range, this is what gets the bars to not be floating everywhere (take max height and subtract from calculated)
 	    .attr("fill", function(d) {return barColors(d.temp)}) //how to set background color for svg elements is fill
 	    .attr("stroke", "black")
 	    .attr("stroke-width", 10)
