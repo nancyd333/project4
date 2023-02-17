@@ -238,7 +238,7 @@ export default class Data extends Component{
         
         return(
         <div>
-            <h2>the weather on this day</h2>
+            <h2>the weather today</h2>
 
             <form >
             <label>
