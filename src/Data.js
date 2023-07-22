@@ -25,12 +25,21 @@ export default class Data extends Component{
 
     //formats js date to month with leading zero 1 becomes 01; 12 remains 12
     formattedMonth = () =>{
-        if(this.month.length !== 2){
+        if(this.month.toString().length !== 2){
             return `0${this.month}`
         } else{
             return `${this.month}`
         }
     }
+
+    //formats js date to day with leading zero 1 becomes 01; 12 remains 12
+    formattedDay = () =>{
+    if(this.day.toString().length !== 2){
+        return `0${this.day}`
+    } else{
+        return `${this.day}`
+    }
+}
 
     //takes js date month, numberic from 0-11 and returns the text. 0 returns Jan
     monthNumberToText = (num) => {
@@ -72,19 +81,19 @@ export default class Data extends Component{
 
     //these are used as parameters in variables which are then passed to the API
     day = this.today.getDate()
-    month = this.today.getMonth() + 1 //this converts the js month number system 0-11 to the number systems users use 1-12
+    month = this.today.getMonth() + 1//this converts the js month number system 0-11 to the number systems users use 1-12
     currentYear = this.today.getFullYear()
     oneYearAgo = this.currentYear - 1
     fiveYearsAgo = this.currentYear - 5
     tenYearsAgo = this.currentYear - 10
-    thirtyYearsAgo = this.currentYear - 30
+    thirtyYearsAgo = this.currentYear - 30    
 
     //these variables are used as parameters in the API and the function getTempDate() to get the temperature for a particular date which is passed to react state
-    fullCurrentDate = `${this.currentYear}-${this.formattedMonth()}-${this.day}`
-    fullOneYearAgoDate = `${this.oneYearAgo}-${this.formattedMonth()}-${this.day}`
-    fullFiveYearsAgoDate = `${this.fiveYearsAgo}-${this.formattedMonth()}-${this.day}`
-    fullTenYearsAgoDate = `${this.tenYearsAgo}-${this.formattedMonth()}-${this.day}`
-    fullThirtyYearsAgoDate = `${this.thirtyYearsAgo}-${this.formattedMonth()}-${this.day}`
+    fullCurrentDate = `${this.currentYear}-${this.formattedMonth()}-${this.formattedDay()}`
+    fullOneYearAgoDate = `${this.oneYearAgo}-${this.formattedMonth()}-${this.formattedDay()}`
+    fullFiveYearsAgoDate = `${this.fiveYearsAgo}-${this.formattedMonth()}-${this.formattedDay()}`
+    fullTenYearsAgoDate = `${this.tenYearsAgo}-${this.formattedMonth()}-${this.formattedDay()}`
+    fullThirtyYearsAgoDate = `${this.thirtyYearsAgo}-${this.formattedMonth()}-${this.formattedDay()}`
 
     
     getCityData = async (e) => {
@@ -165,7 +174,7 @@ export default class Data extends Component{
                     }
                 }
             }
-            // console.log("one historical data", getTempDate(this.fullOneYearAgoDate))
+            console.log("one historical data", getTempDate(this.fullOneYearAgoDate))
 
             function getTempAvg(month, day){
                 const tempsThisMonth = []
@@ -234,7 +243,9 @@ export default class Data extends Component{
             {"date": this.thirtyYearsAgo, "temp": this.state.thirtyYearsAgoTemp},
         ]
         
-        // console.log("data to pass to props", data)
+
+        console.log("data to pass to props", data)
+
         
         return(
         <div>
